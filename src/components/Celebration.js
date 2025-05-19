@@ -21,18 +21,29 @@ const Celebration = ({ onComplete }) => {
       });
     };
 
-    window.addEventListener("resize", handleResize);
+    // Solo añadir el evento listener en el cliente
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", handleResize);
+    }
 
-    // Detener confeti después de 5 segundos
+    // Detener confeti después de 5 segundos y mostrar el mensaje de celebración
     const timer = setTimeout(() => {
       setShowConfetti(false);
     }, 5000);
 
+    // Auto-completar después de 7 segundos si el usuario no hace clic
+    const autoCompleteTimer = setTimeout(() => {
+      onComplete();
+    }, 7000);
+
     return () => {
-      window.removeEventListener("resize", handleResize);
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", handleResize);
+      }
       clearTimeout(timer);
+      clearTimeout(autoCompleteTimer);
     };
-  }, []);
+  }, [onComplete]);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 backdrop-blur-sm">
@@ -61,7 +72,12 @@ const Celebration = ({ onComplete }) => {
           <motion.div
             className="inline-block mb-4"
             animate={{ rotate: [0, 10, -10, 10, 0] }}
-            transition={{ duration: 1, delay: 0.5 }}
+            transition={{
+              duration: 1,
+              delay: 0.5,
+              repeat: Infinity,
+              repeatDelay: 2,
+            }}
           >
             <Image
               src="/images/decorations/stitch-happy.png"
@@ -71,7 +87,7 @@ const Celebration = ({ onComplete }) => {
               className="h-30 w-auto mx-auto object-contain"
               onError={(e) => {
                 console.error("Error cargando imagen de Stitch feliz");
-                e.target.style.display = "none";
+                e.target.src = "/images/decorations/heart.png"; // Imagen de respaldo
               }}
             />
           </motion.div>
@@ -98,14 +114,14 @@ const Celebration = ({ onComplete }) => {
 
           <motion.button
             onClick={onComplete}
-            className="custom-button custom-button-primary"
+            className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-blue-500 text-white font-medium shadow-md hover:bg-blue-600 transition-colors"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.7 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
-            <FiHeart className="icon" />
+            <FiHeart className="mr-2" />
             Ver Mensajes
           </motion.button>
         </div>

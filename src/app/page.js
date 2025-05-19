@@ -4,7 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import SlidingPuzzle from "../components/SlidingPuzzle";
 import LoveCard from "../components/LoveCard";
 import Celebration from "../components/Celebration";
-import { FiStar, FiHeart, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import {
+  FiStar,
+  FiHeart,
+  FiChevronLeft,
+  FiChevronRight,
+  FiGift,
+  FiSkipForward,
+} from "react-icons/fi";
 import {
   GiSeaStar,
   GiSeashell,
@@ -111,6 +118,20 @@ export default function Home() {
     createDecorations();
   }, []);
 
+  // Función para saltar los juegos e ir directamente a las tarjetas
+  const skipToLoveCards = () => {
+    // Completar artificialmente todos los niveles
+    const allLevels = Array.from({ length: 2 }, (_, i) => i + 1);
+    setCompletedLevels(allLevels);
+
+    // Mostrar brevemente la celebración y luego las tarjetas
+    setShowCelebration(true);
+    setTimeout(() => {
+      setShowCelebration(false);
+      setShowLoveCards(true);
+    }, 2000);
+  };
+
   // Función para manejar la compleción de un nivel
   const handleLevelComplete = (level) => {
     if (!completedLevels.includes(level)) {
@@ -192,6 +213,24 @@ export default function Home() {
           );
         }
       })}
+
+      {/* Botón flotante para saltar los juegos */}
+      {!showLoveCards && (
+        <motion.button
+          onClick={skipToLoveCards}
+          className="fixed bottom-6 right-6 inline-flex items-center justify-center p-4 rounded-full bg-pink-500 text-white shadow-lg hover:bg-pink-600 z-50"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 300, damping: 25, delay: 1 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <div className="flex flex-col items-center">
+            <FiSkipForward size={20} className="mb-1" />
+            <span className="text-xs font-medium">Ir a mensajes</span>
+          </div>
+        </motion.button>
+      )}
 
       <div className="content-container">
         <header className="text-center pt-6 pb-4">
