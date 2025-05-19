@@ -119,7 +119,6 @@ export default function Home() {
 
       // Si hay más niveles, avanzar al siguiente después de un breve retraso
       if (level < 2) {
-        // Cambiado de 3 a 2
         setTimeout(() => {
           setCurrentLevel(level + 1);
         }, 1500);
@@ -220,16 +219,6 @@ export default function Home() {
               />
             ))}
           </div>
-
-          {/* Botón para modo de prueba */}
-          {/* <div className="mt-2">
-            <button
-              onClick={() => setShowLoveCards(true)}
-              className="text-xs bg-gray-200 text-gray-500 px-2 py-1 rounded hover:bg-gray-300"
-            >
-              Ver Tarjetas (Modo Prueba)
-            </button>
-          </div> */}
         </header>
 
         <AnimatePresence mode="wait">
@@ -294,7 +283,6 @@ export default function Home() {
                       )
                     }
                     className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white bg-opacity-70 text-primary hover:bg-opacity-100 transition-all"
-                    disabled={currentCardIndex === 0}
                   >
                     <FiChevronLeft size={24} />
                   </button>
@@ -320,7 +308,6 @@ export default function Home() {
                       )
                     }
                     className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white bg-opacity-70 text-primary hover:bg-opacity-100 transition-all"
-                    disabled={currentCardIndex === loveMessages.length - 1}
                   >
                     <FiChevronRight size={24} />
                   </button>

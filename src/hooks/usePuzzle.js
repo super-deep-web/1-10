@@ -30,7 +30,7 @@ export default function usePuzzle(size = 3, level = 1) {
     setEmptyIndex(newEmptyIndex);
     setIsSolved(false);
     setMoveCount(0);
-  }, [size]);
+  }, [size, level]); // Añadimos level como dependencia
 
   // Algoritmo de mezcla que garantiza que el puzzle sea resoluble
   const shuffleTiles = (tilesArray, size) => {
@@ -153,6 +153,9 @@ export default function usePuzzle(size = 3, level = 1) {
 
   // Inicializar el rompecabezas al montar el componente o cambiar el nivel
   useEffect(() => {
+    // Reiniciar el estado del puzzle cuando cambia el nivel
+    setIsSolved(false);
+    setMoveCount(0);
     initializePuzzle();
   }, [initializePuzzle, level]);
 
