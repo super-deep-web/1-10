@@ -108,16 +108,6 @@ const Celebration = ({ onComplete }) => {
             <FiHeart className="icon" />
             Ver Mensajes
           </motion.button>
-
-          {/* Botón para omitir la animación (solo para pruebas) */}
-          {/* <div className="mt-2">
-            <button
-              onClick={onComplete}
-              className="text-xs bg-gray-200 text-gray-500 px-2 py-1 rounded hover:bg-gray-300"
-            >
-              Omitir (Modo Prueba)
-            </button>
-          </div> */}
         </div>
       </motion.div>
     </div>
